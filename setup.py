@@ -9,16 +9,16 @@ setup(
     packages=find_packages(),
     install_requires=[
         # List your dependencies here
-        'numpy',
-        'pandas',
+        'numpy==1.21.2',
+        'pandas==1.5.3',
         'scikit-learn',
         'sigproSS',
-        'sigProfilerPlotting',
+        'sigProfilerPlotting==1.2.1',
         'seaborn',
         'matplotlib',
-        'SigProfilerMatrixGenerator',
-        'SigProfilerExtractor',
-        'SigProfilerAssignment'
+        'SigProfilerMatrixGenerator==1.2.4',
+        'SigProfilerExtractor==1.1.7',
+        'SigProfilerAssignment==0.0.5'
         # Add other dependencies
     ],
     include_package_data=True,  # This flag tells setuptools to include package data
@@ -33,6 +33,7 @@ setup(
     },
     classifiers=[
         'Programming Language :: Python :: 3',
+        'License :: Academic Software License, 20XX The Broad Institute',
         'Operating System :: OS Independent',
     ],
 )

@@ -2,9 +2,7 @@
 # coding: utf-8
 
 import argparse
-import sigproSS as cosmic
 import sigProfilerPlotting as sigPlt
-import os
 from SigProfilerMatrixGenerator.scripts import SigProfilerMatrixGeneratorFunc as datadump
 from SigProfilerExtractor import subroutines as sub
 from SigProfilerExtractor import SigProfilerPlottingMatrix as sppm
@@ -12,23 +10,10 @@ import pandas as pd
 import SigProfilerAssignment as spa
 from SigProfilerAssignment import decomposition as decomp
 from SigProfilerAssignment import Analyzer as Analyze
-from PIL import Image
-import matplotlib.pyplot as plt
-from PyPDF2 import PdfFileMerger
-import seaborn as sns
 import numpy as np
-print(cosmic.__path__[0])
 import glob
 import pickle
-import random
 import pkg_resources
-np.set_printoptions(precision=2, suppress=True)
-pd.set_option('display.float_format', lambda x: '%.5f' % x)
-
-
-path = spa.__path__[0]
-cosmic_version=3.2
-ID83 = pd.read_csv(path+"/data/Reference_Signatures/GRCh37/COSMIC_v"+str(cosmic_version)+"_ID_GRCh37.txt", sep="\t", index_col=0)
 
 def _EM(dat, sigs, feat, indx, maxitr=100, verbose=False):
     #print("#signatures used:", len(sigs))
@@ -154,10 +139,8 @@ def mmm_classifier(inputmat, id8 = True,
 
 
 ## This exmaple uses GRch37 or HG19 reference
-def directhrd_run(project, project_name, myfeat='Del:M|5:Del:R:0'):
-    refgen = "GRCh37"
-    caller="sfc" 
-    mutation_profile=datadump.SigProfilerMatrixGeneratorFunc(project_name, refgen, project, exome=False,  bed_file=None, chrom_based=False, plot=False, gs=False)
+def directhrd_run(project, refgen, myfeat='Del:M|5:Del:R:0'):
+    mutation_profile=datadump.SigProfilerMatrixGeneratorFunc("directhrd", refgen, project, exome=False,  bed_file=None, chrom_based=False, plot=False, gs=False)
     directhrd_res = mmm_classifier(mutation_profile['ID'], feat=myfeat, id8=True)
     return (directhrd_res)
 
@@ -196,13 +179,13 @@ def print_mhdel(vdir, sam):
 def main():
     parser = argparse.ArgumentParser(prog="hrd_classifier", formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("input_folder", type=str, help="input folder")
-    parser.add_argument("--project_name", "-p", default="NA", type=str, help="project name")
+    parser.add_argument("--ref_version", "-r", required=True, type=str, choices=['GRCh37', 'GRCh38'], help="human referernce version")
     parser.add_argument("--output", "-o", default="directhrd.results.txt", type=str, help="result file")
     args = parser.parse_args()
     # Your code here
     print("HRD Classifier is running.")
     ### input folder contains only indel VCF files
-    results = directhrd_run(args.input_folder, args.project_name)
+    results = directhrd_run(args.input_folder, args.ref_version)
     print(f"Result was written to {args.output}.")
     results.to_csv(args.output, sep="\t", index=False)
     # You can place the code from your Jupyter notebook here or call other functions
