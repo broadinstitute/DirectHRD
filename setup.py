@@ -9,7 +9,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         # List your dependencies here
-        'numpy==1.21.2',
+        'numpy==1.22.0',
         'pandas==1.5.3',
         'scikit-learn',
         'sigproSS',
