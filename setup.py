@@ -1,15 +1,23 @@
 from setuptools import setup, find_packages
 
+def get_version():
+    with open("HRD_classifier/__version__.py") as f:
+        for line in f:
+            if line.startswith("__version__"):
+                delim = '"' if '"' in line else "'"
+                return line.split(delim)[1]
+    raise RuntimeError("Unable to find version string.")
+
 setup(
     name='HRD_classifier',
-    version='0.1.0',
+    version=get_version(),
     description='A package for HRD classification',
     author='Ruolin Liu',
     author_email='ruolin@broadinstitute.org',
-    packages=find_packages(),
+    packages=setuptools.find_packages(),
     install_requires=[
         # List your dependencies here
-        'numpy==1.26.3',
+        'numpy>=1.21.2,<=1.26.3',
         'pandas==1.5.3',
         'sigProfilerPlotting==1.2.1',
         'matplotlib>=2.2.2',

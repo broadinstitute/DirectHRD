@@ -15,6 +15,11 @@ import glob
 import pickle
 import pkg_resources
 
+from .__version__ import __version__
+
+def print_version():
+    print(f"DirectHRD version: {__version__}")
+
 def _EM(dat, sigs, feat, indx, maxitr=100, verbose=False):
     #print("#signatures used:", len(sigs))
     id_probs = []
@@ -188,6 +193,7 @@ def main():
     args = parser.parse_args()
     # Your code here
     print("HRD Classifier is running.")
+    print_version()
     ### input folder contains only indel VCF files
     results = directhrd_run(args.input_folder, args.ref_version)
     print(f"Result was written to {args.output}.")
