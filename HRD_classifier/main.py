@@ -15,6 +15,11 @@ import glob
 import pickle
 import pkg_resources
 
+from .__version__ import __version__
+
+def print_version():
+    print(f"DirectHRD version: {__version__}")
+
 def _EM(dat, sigs, feat, indx, maxitr=100, verbose=False):
     #print("#signatures used:", len(sigs))
     id_probs = []
@@ -38,7 +43,7 @@ def _EM(dat, sigs, feat, indx, maxitr=100, verbose=False):
     alpha=1/nindels
     for i in range(maxitr):
         for idx in range(len(pis)):
-            hidtable = pis[idx]*probs[idx]/np.sum(np.column_stack(probs)*pis, axis=1)              
+            hidtable = pis[idx]*probs[idx]/np.sum(np.column_stack(probs)*pis, axis=1)
             hidtable = np.nan_to_num(hidtable)
             #dat = dat.astype('float')
             tmpSigWt = np.dot(hidtable, dat)
@@ -80,7 +85,7 @@ def mmm_classifier(inputmat, id8 = True,
     scores = []
     n_informative_del = []
     id6pis = []
-    id8pis = []
+    negpis = []
     considered = []
     dellen2 = []
     totdel = []
@@ -106,11 +111,11 @@ def mmm_classifier(inputmat, id8 = True,
         if dat.sum() == 0:
             scores.append(np.nan)
             id6pis.append(np.nan)
-            id8pis.append(np.nan)
+            negpis.append(np.nan)
             continue
         pis, probs, converged = _EM(dat, sigs, feat, indx, maxitr=maxitr, verbose=verbose)
         if id8:
-            indel_scores = probs[0] * pis[0] / (probs[0] * pis[0] + probs[1] * pis[1] + probs[2]*probs[2])
+            indel_scores = probs[0] * pis[0] / (probs[0] * pis[0] + probs[1] * pis[1] + probs[2]*pis[2])
         else:
             indel_scores = probs[0] * pis[0] / (probs[0] * pis[0] + probs[1] * pis[1])
         indel_scores = np.nan_to_num(indel_scores)
@@ -119,15 +124,15 @@ def mmm_classifier(inputmat, id8 = True,
         hrdscore = sum(inputmat[sam].loc[indx,].filter(regex=count_feat, axis='index') * indel_scores.filter(regex=count_feat, axis='index')) * (pis[0])
         hrdscore = round(hrdscore, 2)
         id6pis.append(pis[0])
-        id8pis.append(pis[1])
+        negpis.append(pis[1])
         if verbose:
             print(sam, hrdscore, pis[0], sep='\t')
         scores.append(hrdscore)
-    result = pd.DataFrame({'sample':samples, 
-                           'HRDscore':scores, 
-                           'n_informative_del':n_informative_del, 
-                           'pos_prob':id6pis,
-                           'neg_prob':id8pis,
+    result = pd.DataFrame({'sample':samples,
+                           'HRDscore':scores,
+                           'ID6_prob':id6pis,
+                           'HRDneg_prob':negpis,
+                           'n_informative_del':n_informative_del,
                            'mhdels': mhdels,
                            '5del_m2': del5_m2,
                            'considered': considered,
@@ -188,6 +193,7 @@ def main():
     args = parser.parse_args()
     # Your code here
     print("HRD Classifier is running.")
+    print_version()
     ### input folder contains only indel VCF files
     results = directhrd_run(args.input_folder, args.ref_version)
     print(f"Result was written to {args.output}.")
