@@ -10,12 +10,9 @@ setup(
     install_requires=[
         # List your dependencies here
         'numpy==1.26.3',
-        'pandas==2.1.4',
-        'scikit-learn',
-        'sigproSS',
+        'pandas==1.5.3',
         'sigProfilerPlotting==1.2.1',
-        'seaborn',
-        'matplotlib',
+        'matplotlib>=2.2.2',
         'SigProfilerMatrixGenerator==1.2.4',
         'SigProfilerExtractor==1.1.7',
         'SigProfilerAssignment==0.0.5'

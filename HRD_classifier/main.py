@@ -140,7 +140,11 @@ def mmm_classifier(inputmat, id8 = True,
 
 ## This exmaple uses GRch37 or HG19 reference
 def directhrd_run(project, refgen, myfeat='Del:M|5:Del:R:0'):
-    mutation_profile=datadump.SigProfilerMatrixGeneratorFunc("directhrd", refgen, project, exome=False,  bed_file=None, chrom_based=False, plot=False, gs=False)
+    try:
+        mutation_profile=datadump.SigProfilerMatrixGeneratorFunc("directhrd", refgen, project, exome=False,  bed_file=None, chrom_based=False, plot=False, gs=False)
+    except Exception as e:
+        print(f"An error occured: {e}")
+
     directhrd_res = mmm_classifier(mutation_profile['ID'], feat=myfeat, id8=True)
     return (directhrd_res)
 
