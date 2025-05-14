@@ -10,6 +10,7 @@ def get_version():
 
 setup(
     name='HRD_classifier',
+    python_requires='>=3.9.21',
     version=get_version(),
     description='A package for HRD classification',
     author='Ruolin Liu',
@@ -17,13 +18,13 @@ setup(
     packages=setuptools.find_packages(),
     install_requires=[
         # List your dependencies here
-        'numpy>=1.21.2,<=1.26.3',
-        'pandas==1.5.3',
-        'sigProfilerPlotting==1.2.1',
-        'matplotlib>=2.2.2',
-        'SigProfilerMatrixGenerator==1.2.4',
-        'SigProfilerExtractor==1.1.7',
-        'SigProfilerAssignment==0.0.5'
+        'numpy>=2.0.0',
+        'pandas>=2.0',
+        'sigProfilerPlotting==1.4.0',
+        'matplotlib>=3.8.2',
+        'SigProfilerMatrixGenerator==1.3.0',
+        'SigProfilerExtractor==1.2.0',
+        'SigProfilerAssignment==0.2.0'
         # Add other dependencies
     ],
     include_package_data=True,  # This flag tells setuptools to include package data

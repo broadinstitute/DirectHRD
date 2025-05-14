@@ -2,6 +2,9 @@
 
 DirectHRD is an ultrasensitive scar-based classifier to detect HRD from low tumor fraction samples such as liquid biopsies using whole-genome sequencing (WGS). DirectHRD encompasses two components which are small Indel calling and HRD calling. This workspace contains code only for the HRD calling part. In theory, a user can use their favorite Indel caller for WGS data. However, we do recommend using CODECsuite for Indel calling. 
 
+> [!NOTE]
+> Minimum python version 3.9.21 
+
 # To install DirectHRD
   1. `git clone https://github.com/broadinstitute/DirectHRD.git`
   2. `cd DirectHRD && pip install .`

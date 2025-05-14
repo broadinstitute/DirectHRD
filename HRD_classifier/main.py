@@ -5,7 +5,6 @@ import argparse
 import sigProfilerPlotting as sigPlt
 from SigProfilerMatrixGenerator.scripts import SigProfilerMatrixGeneratorFunc as datadump
 from SigProfilerExtractor import subroutines as sub
-from SigProfilerExtractor import SigProfilerPlottingMatrix as sppm
 import pandas as pd
 import SigProfilerAssignment as spa
 from SigProfilerAssignment import decomposition as decomp
@@ -166,7 +165,7 @@ def plot_id83(id_data, outdir, mhdel_only=False, myfeat="Del:M|5:Del:R:0", aggna
         id_data[aggname]=id_data_total
     #std_pos_id
     id_data = id_data.reset_index()
-    buff_list = sppm.plotID(id_data, aggname, aggname, "83", percentage=True)
+    buff_list = sigPlt.plotID(id_data, aggname, aggname, "83", percentage=True)
     for sam in list(buff_list.keys()):
         buf = buff_list[sam]
         with open(outdir+"/"+sam+".Decomposition_Plots.png", "wb") as f:
