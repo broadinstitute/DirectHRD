@@ -13,6 +13,7 @@ import numpy as np
 import glob
 import pickle
 import pkg_resources
+import os
 
 from .__version__ import __version__
 
@@ -153,26 +154,6 @@ def directhrd_run(project, refgen, myfeat='Del:M|5:Del:R:0'):
     return (directhrd_res)
 
 
-#Saving signature files
-def plot_id83(id_data, outdir, mhdel_only=False, myfeat="Del:M|5:Del:R:0", aggname=None):
-    #id_data = pcawg_pos['ID']
-    if mhdel_only:
-        myindel = id_data.filter(regex=myfeat, axis="index").index
-        mask = id_data.index.isin(myindel)
-        id_data[~mask]=0
-    if aggname:
-        id_data_total = id_data.apply(sum, axis=1)
-        id_data[aggname]=id_data_total
-    #std_pos_id
-    id_data = id_data.reset_index()
-    buff_list = sigPlt.plotID(id_data, aggname, aggname, "83", percentage=True)
-    for sam in list(buff_list.keys()):
-        buf = buff_list[sam]
-        with open(outdir+"/"+sam+".Decomposition_Plots.png", "wb") as f:
-            _=f.write(buf.getbuffer())
-
-
-
 #print mhdels
 def print_mhdel(vdir, sam):
     alldf = pd.DataFrame()
@@ -189,7 +170,15 @@ def main():
     parser.add_argument("input_folder", type=str, help="input folder")
     parser.add_argument("--ref_version", "-r", required=True, type=str, choices=['GRCh37', 'GRCh38'], help="human referernce version")
     parser.add_argument("--output", "-o", default="directhrd.results.txt", type=str, help="result file")
+    parser.add_argument("-s", "--sample", default="", type=str, help="print mhDels for a specific sample")
+    parser.add_argument("-p", "--plot", default="", type=str, help="output directory for ID83 signature plot")
     args = parser.parse_args()
+    if args.sample:
+        print(print_mhdel(args.input_folder, args.sample))
+        return
+    if args.plot:
+        sigPlt.plotID(os.path.join(args.input_folder, "output", "ID/directhrd.ID83.all"), args.plot, "directhrd", "83", percentage=True)
+        return
     # Your code here
     print("HRD Classifier is running.")
     print_version()
