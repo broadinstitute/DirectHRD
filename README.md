@@ -51,6 +51,9 @@ The `germline_bam` is highly recommand to have for the purpose of calling tumor-
 
 The `population_based_vcf` is another good to have input file which can mitigate contamination and low germline depth. We recommand using the ALFA dataset from dbsnp https://www.ncbi.nlm.nih.gov/snp/docs/gsr/alfa/.  
 
+> [!Note]
+> You can convert the CODEC variant .txt file to VCF format by following the [two simple steps](https://github.com/broadinstitute/CODECsuite?tab=readme-ov-file#reformatting-codec-sfc-variant-output-into-maf-or-vcf-format). 
+
 # HRD calling
 
 In practice, a user can use any Indel caller such as Mutect2 or Strelka2 to call Indels. However, I do recommend post-filtering the Indel calls using a low comlexity filter such as genome in a bottle [GRCh37 high complexity regions](https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/genome-stratifications/v3.0/GRCh37/LowComplexity/GRCh37_notinAllTandemRepeatsandHomopolymers_slop5.bed.gz) or [GRCh38 high complexity regions](https://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/genome-stratifications/v3.0/GRCh38/LowComplexity/GRCh38_notinAllTandemRepeatsandHomopolymers_slop5.bed.gz)
