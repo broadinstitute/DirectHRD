@@ -8,7 +8,7 @@ DirectHRD is an ultrasensitive scar-based classifier to detect HRD from low tumo
 # To install DirectHRD
   1. `git clone https://github.com/broadinstitute/DirectHRD.git`
   2. `cd DirectHRD && pip install .`
-  3. Then you would need to install reference genome for [SigProfilerMatrixGenerator](https://github.com/AlexandrovLab/SigProfilerMatrixGenerator) (see this page for details) to able to parse the Indel variants to ID83 format. You could choose GRCh37 or GRCh38 to install. 
+  3. Then you would need to install reference genome for [SigProfilerMatrixGenerator](https://github.com/AlexandrovLab/SigProfilerMatrixGenerator) (see this page for details) to able to parse the Indel variants to ID83 format. Choices of reference genome includes GRCh37, GRCh38, mm9 and mm10. 
      1. `$ python`
      2. `from SigProfilerMatrixGenerator import install as genInstall`
      3. `genInstall.install('GRCh38', rsync=False, bash=True)`
